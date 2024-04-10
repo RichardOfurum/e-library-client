@@ -1,0 +1,108 @@
+/* .landing_page{
+    background-image: url('/landing1.jpg');
+    filter: brightness(0.1);
+    height: 100vh;
+    width: 100%;
+} */
+
+
+  
+
+  
+  /* .nav{
+    display: flex;
+    background-color: red;
+  } */
+
+  
+
+  .landing_page{
+    background-image: url('/landing1.jpg');
+      /* filter: brightness(0.1); */
+     background-size: cover;
+    background-position: center;
+    position: relative;
+    
+    height: 100vh;
+    width: 100%;
+      
+  }
+
+  .landing_container{
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-between;
+      align-items: center;
+      /* background-color: red; */
+  }
+  
+  
+.landing_page::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(4px); /* Adjust the blur radius as needed */
+    z-index: 1; /* Ensure the pseudo-element is positioned behind other content */
+  
+    background-color: rgba(15, 15, 15, 0.24); /* Adjust the alpha value to control darkness */
+
+  }
+
+  .hero_text{
+    text-shadow: "2px 2px 5px rgba(0, 0, 0.5)" !important;
+    color: whitesmoke;
+    font-weight: bolder;
+    font-size: 70px;
+  }
+
+  .sign_up{
+    background-color: white;
+    text-decoration: none;
+    color: black;
+  }
+
+  
+  .nav{
+    display: flex;
+    /* background-color: red; */
+  }
+
+  .landing_footer{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .landing_footer > p{
+    width: 200px;
+    font-size: 19px;
+    background-color: rgba(245, 245, 245, 0.253);
+    padding: 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* Styles for desktops and laptops */
+@media only screen and (min-width: 1024px) {
+  /* Your CSS styles for desktops and laptops here */
+}
+
+/* Styles for tablets */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  /* Your CSS styles for tablets here */
+}
+
+/* Styles for mobile phones */
+@media only screen and (max-width: 767px) {
+  /* Your CSS styles for mobile phones here */
+  .hero_text{
+    font-size: 45px;
+  }
+}

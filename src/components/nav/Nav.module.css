@@ -1,0 +1,100 @@
+.nav{
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav_container{
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+.left{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.left > h3{
+    color: rgb(77, 74, 74);
+}
+
+.search_box{
+    cursor: pointer;
+    display: flex;
+    align-items:center;
+    gap: 5px;
+    border: 1px solid rgb(189, 185, 185);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.search_box > p{
+    color: rgb(189, 185, 185);
+}
+
+.search_icon{
+    font-size: 20px;
+    color: rgb(77, 74, 74);
+}
+
+.search_icon_mobile{
+    font-size: 20px;
+    color: rgb(77, 74, 74);
+    display: none;
+}
+
+.right{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.right_mobile{
+    display: none;
+}
+
+ /* Styles for desktops and laptops */
+ @media only screen and (min-width: 1024px) {
+    /* Your CSS styles for desktops and laptops here */
+  }
+  
+  /* Styles for tablets */
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your CSS styles for tablets here */
+  }
+  
+  /* Styles for mobile phones */
+  @media only screen and (max-width: 767px) {
+    /* Your CSS styles for mobile phones here */
+    .nav_container{
+        width: 97%;
+    }
+
+    .search_box{
+        display: none;
+    }
+
+    .right{
+        display: none;
+    }
+
+    .right_mobile{
+        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+    }
+
+    .search_icon_mobile{
+        display: block;
+    }
+  }

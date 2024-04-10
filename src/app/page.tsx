@@ -1,95 +1,78 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+import Link from "next/link";
+// import styles from "./page.module.css";
+// import styles from './Home.module.css';
+import "./home.css";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main 
+      className="landing_page"
+      style={{
+        width:"100%", display:"flex", flexDirection:"column", alignItems:"center",
+        gap:"70px"
+      }}>
+        
+        <div className="landing_container">
+          <nav className="nav" style={{display:"flex", justifyContent:"space-between", width:"90%", marginTop:"50px"}}>
+              <h1 
+                style={{fontWeight:"bold", color:"whitesmoke",
+                textShadow: "2px 2px 5px rgba(0, 0, 0.5)",
+                }}>E-Library</h1>
+
+              <Link 
+                className="sign_up"
+                href="/auth/login"
+                style={{border:"none", paddingLeft:"20px", paddingRight:"20px", paddingTop:"10px", paddingBottom:"10px",
+                fontWeight:"bold",
+                cursor:"pointer",
+                
+              }}>SignIn</Link>
+          </nav>
+
+          <section 
+            style={{
+              marginTop:"80px",
+              display:"flex",
+              flexDirection:"column",
+              alignItems:"center"
+            }}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+              <h1 className="hero_text">School Of Nuresing</h1>
+              <p
+                style={{
+                  color:"whitesmoke",
+                  textShadow: "2px 2px 5px rgba(0, 0, 0.5)",
+                  fontSize:"20px",
+
+                }}
+              >Holly Rosary Hospital Emekuku</p>
+          </section>
+
+          <section 
+            className="landing_footer"
+            style={{
+              display:"flex",
+              color:"whitesmoke",
+              textShadow: "2px 2px 5px rgba(0, 0, 0.5)",
+            }}
+          >
+              <p 
+                
+              >The more you know, the more you grow.</p>
+              <p
+              
+              >
+                  learn from yesterday, live for today.
+              </p>
+              <p 
+              
+              >Knowledge is power</p>
+              <p 
+              
+              >Knowledge speaks, but wisdom listens.</p>
+          </section>
         </div>
-      </div>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
     </main>
   );
 }
