@@ -30,8 +30,7 @@ const Nav:React.FC = () => {
             </div>
             
             <div className={styles.right_mobile} onClick={() => setShowMobileNav(!showMobileNav)}>
-                {/* <p>{username}</p> */}
-                <p>mobile</p>
+                <p>{username}</p>
                 <BiUser/>
             </div>
 

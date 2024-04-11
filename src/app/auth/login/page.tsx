@@ -73,6 +73,7 @@ const loginUserAndAdmin = () =>{
                 const data = await response.json();
 
                 if (data.statusCode == 400) {
+                    alert("yes")
                     setError(true);
                     setErrorMessage(data.message)
                     setLoading(false)
