@@ -5,24 +5,24 @@ import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 const IsAdmin:React.FC = () => {
-  const [admin, setAdmin] = useState<boolean>();
+  const [admin, setAdmin] = useState<boolean>(true);
   const isAdmin = useUserStore(state => state.user_data.isAdmin)
 
   const router = useRouter();
 
   const checkLoginState = () =>{
-    if(admin == false){
-      router.push('/auth/login')
-    }
+      if(!admin){
+        router.push('/auth/login')
+      }
   }
 
-  useLayoutEffect(() =>{
-    setAdmin(isAdmin);
+  useEffect(() =>{
+      setAdmin(isAdmin);
   },[isAdmin]);
 
   useEffect(() =>{
-    checkLoginState();
-  },[admin])
+      checkLoginState();
+  },[isAdmin])
 
   return <> </>
   
