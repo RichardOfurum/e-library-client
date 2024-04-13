@@ -34,10 +34,8 @@ const isLoggedin = useUserStore((state) => state.user_data.isLoggedin);
 const isAdmin = useUserStore((state) => state.user_data.isAdmin);
 
 const loginUserAndAdmin = () =>{
-    if (loggedIn && admin) {
-        router.push('/admin');
-    }else if(loggedIn){
-        router.push('/book');
+   if(loggedIn){
+        router.back();
     }
 }
 

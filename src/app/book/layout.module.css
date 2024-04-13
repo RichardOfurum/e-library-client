@@ -22,8 +22,9 @@
 }
 
 .right{
-    /* background-color: white; */
-    background-color: yellow;
+    /* background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(233,229,233,1) 100%, rgba(255,255,255,1) 100%); */
+    background-color: white;
     padding: 20px;
     width: 70%;
     flex: 1;

@@ -28,95 +28,79 @@ const AddBook = () => {
     const imageRef = useRef<HTMLInputElement | null>(null);
     const urlRef = useRef<HTMLInputElement | null>(null);
 
-    const [image, setImages] = useState<string>("image");
-    const [book_url, setBookUrl] = useState<string>("book");
+    const [image, setImages] = useState<string>("/image");
+    const [book_url, setBookUrl] = useState<string>("/book");
     // const [url, setUrl] = useState<File | null>(null);
 
-    const handleUpload = async() =>{
-        // e.preventDefault();
-       
+    const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault(); // Prevent the default form submission
+      
+        setLoading(true);
+      
         const image = imageRef.current?.files?.[0];
         const pdf = urlRef.current?.files?.[0];
-        
+      
         if (pdf) {
-            setLoading(true);
-            // setProgress(0);
-            const imageSize = image?.size; // Get the size of the file
-            const pdfSize = pdf?.size; // Get the size of the file
-            console.log('File selected:', image, pdf);
-
-            // size is less than or equal to 5MB
-            if (image && image.type.startsWith('image/')) {
-
-                if(imageSize && imageSize <= 2 * 1024 * 1024){
-                    try {
-                        const fileRef = ref(storage, `book_images/${image.name + Date.now()}`);
-
-                        const snapshot = await uploadBytes(fileRef, image);
-                        console.log("file Uploaded", snapshot);
-
-                        const image_url = await getDownloadURL(snapshot.ref);
-
-                        setImages(image_url)
-
-                        console.log(image_url);
-
-                    } catch (error: any) {
-                        setLoading(false);
-                        console.log(error?.message)
-                    }
-                }else{
-                    setLoading(false);
-                    console.log("file size too large")
-                }
-            }else{
+          const imageSize = image?.size;
+          const pdfSize = pdf?.size;
+      
+          if (image && image.type.startsWith('image/')) {
+            if (imageSize && imageSize <= 2 * 1024 * 1024) {
+              try {
+                const fileRef = ref(storage, `book_images/${image.name + Date.now()}`);
+                const snapshot = await uploadBytes(fileRef, image);
+                const image_url = await getDownloadURL(snapshot.ref);
+                setImages(image_url);
+              } catch (error: any) {
                 setLoading(false);
-                console.log("Please select a valid image");
+                console.log(error?.message);
+                return;
+              }
+            } else {
+              setLoading(false);
+              console.log("file size too large");
+              return;
             }
-            
-            // size is less than or equal to 5MB
-            if ((pdf && pdf.type === 'application/pdf')) {
-
-                if(pdfSize <= 15 * 1024 * 1024){
-                    try {
-                        const fileRef = ref(storage, `book_pdfs/${pdf.name + Date.now()}`);
-
-                        const snapshot = await uploadBytes(fileRef, pdf);
-                        console.log("file Uploaded", snapshot);
-
-                        const pdf_url = await getDownloadURL(snapshot.ref);
-
-                        setBookUrl(pdf_url);
-
-                        if(pdf_url){
-                            updateBook();
-                            console.log(categories);
-                            console.log(pdf_url);
-                        }
- 
-                    } catch (error: any) {
-                        setLoading(false);
-                        console.log(error?.message)
-                    }
-                }else{
-                    setLoading(false);
-                    console.log("file size too large")
-                }
-            }else{
-                setLoading(false);
-                console.log("Please select a valid pdf");
-            }
-
-            
-        } else {
+          } else {
             setLoading(false);
-            console.log('No file selected');
+            console.log("Please select a valid image");
+            return;
+          }
+      
+          if (pdf && pdf.type === 'application/pdf') {
+            if (pdfSize && pdfSize <= 15 * 1024 * 1024) {
+              try {
+                const fileRef = ref(storage, `book_pdfs/${pdf.name + Date.now()}`);
+                const snapshot = await uploadBytes(fileRef, pdf);
+                const pdf_url = await getDownloadURL(snapshot.ref);
+                setBookUrl(pdf_url);
+              } catch (error: any) {
+                setLoading(false);
+                console.log(error?.message);
+                return;
+              }
+            } else {
+              setLoading(false);
+              console.log("file size too large");
+              return;
+            }
+          } else {
+            setLoading(false);
+            console.log("Please select a valid pdf");
+            return;
+          }
+      
+          // If both image and pdf upload processes are successful,
+          // then call handleSubmit
+          handleSubmit();
+        } else {
+          setLoading(false);
+          console.log('No file selected');
         }
-      }
+      };
 
-
-    const handleSubmit = async(e:React.FormEvent<HTMLFormElement>) =>{
-        e.preventDefault()
+    const handleSubmit = async() =>{
+        
         setLoading(true);
         setErrorMessage('');
         setSuccessMessage('');
@@ -171,9 +155,9 @@ const AddBook = () => {
                             setLoading(false)
                             setErrorMessage('unauthorized access');
                         }else{
-                            setCurrentBookId(data._id)
+                            // setCurrentBookId(data._id)
                             setLoading(false);
-                            handleUpload();
+                            // handleUpload();
                             
                             setSuccessMessage("New Book Added")
                         }
@@ -191,72 +175,74 @@ const AddBook = () => {
             }
     }
     
-    const updateBook = async() =>{
-        setLoading(true);
-        setErrorMessage('');
-        setSuccessMessage('');
+    // const updateBook = async() =>{
+    //     setLoading(true);
+    //     setErrorMessage('');
+    //     setSuccessMessage('');
 
-        const url = baseUrl + `book/${currentBookId}`;
+    //     const url = baseUrl + `book/${currentBookId}`;
 
-        const token = userToken; // Replace with your authentication token
+    //     console.log("currend url is ")
+    //     console.log(url);
+    //     const token = userToken; // Replace with your authentication token
 
-        const body = {
-            "image": image,
-            "url":book_url,
+    //     const body = {
+    //         "image": image,
+    //         "url":book_url,
 
-        }
+    //     }
         
-            const requestOptions = {
-                method: 'PATCH',
-                headers: {'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(body)
-            };
+    //         const requestOptions = {
+    //             method: 'PATCH',
+    //             headers: {'Content-Type': 'application/json',
+    //                 'Authorization': `Bearer ${token}`
+    //             },
+    //             body: JSON.stringify(body)
+    //         };
 
             
-            try {
+    //         try {
 
-                const response = await fetch(url, requestOptions);
+    //             const response = await fetch(url, requestOptions);
             
-                //   alert("working")
-                if (!response.ok) {
-                    setLoading(false)
-                    // throw new Error(`Request failed with status ${response.status}`);
-                    console.log("something went wrong")
-                }
+    //             //   alert("working")
+    //             if (!response.ok) {
+    //                 setLoading(false)
+    //                 // throw new Error(`Request failed with status ${response.status}`);
+    //                 console.log("something went wrong")
+    //             }
 
-                const data = await response.json();
+    //             const data = await response.json();
 
-                if (data.statusCode == 400) {
-                        setErrorMessage(data.message)
-                        setLoading(false)
-                }else{
-                    if (data.statusCode == 500) {
-                        setLoading(false)
-                        setErrorMessage("please check your internet connection");
-                    }else{
-                        if (data.statusCode == 401) {
-                            setLoading(false)
-                            setErrorMessage('unauthorized access');
-                        }else{
-                            setCurrentBookId("")
-                            setLoading(false);
-                            setSuccessMessage("New Book Added")
-                        }
+    //             if (data.statusCode == 400) {
+    //                     setErrorMessage(data.message)
+    //                     setLoading(false)
+    //             }else{
+    //                 if (data.statusCode == 500) {
+    //                     setLoading(false)
+    //                     setErrorMessage("please check your internet connection");
+    //                 }else{
+    //                     if (data.statusCode == 401) {
+    //                         setLoading(false)
+    //                         setErrorMessage('unauthorized access');
+    //                     }else{
+    //                         setCurrentBookId("")
+    //                         setLoading(false);
+    //                         setSuccessMessage("New Book Added")
+    //                     }
                         
-                        // setSuccessMessage("New User Added")
-                    }
+    //                     // setSuccessMessage("New User Added")
+    //                 }
                         
-                }
+    //             }
 
-            console.log(data); // Process the data here
+    //         console.log(data); // Process the data here
             
-            } catch (error) {
-                console.error('Error:', error);
-                setErrorMessage("something went wrong, please reload the page")
-            }
-    }
+    //         } catch (error) {
+    //             console.error('Error:', error);
+    //             setErrorMessage("something went wrong, please reload the page")
+    //         }
+    // }
     
 
 
@@ -335,7 +321,7 @@ const AddBook = () => {
   };
   return (
     <div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleUpload}>
             <div className={styles.input_container}>
                 <label htmlFor="title">Title</label>
                 <input type="text" value={title} onChange={e => setTitle(e.target.value)} placeholder='The life of pie'required/>

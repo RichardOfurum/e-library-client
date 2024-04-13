@@ -5,10 +5,12 @@ const nextConfig = {
             {
                 protocol: 'https',
                 hostname: 'firebasestorage.googleapis.com',
+                port: '',
                 pathname: '**',
             },
         ]
     }
+    // images: { remotePatterns: [ { protocol: "https", hostname: "firebasestorage.googleapis.com", }, ], },
 };
 
 export default nextConfig;

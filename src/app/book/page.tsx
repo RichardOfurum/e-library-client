@@ -1,12 +1,12 @@
-'use client'
-import React from 'react'
-import IsAuth from '@/components/IsAuth';
+import BookList from '@/components/books/BookList';
+import React from 'react';
 
 
-const page: React.FC = () => {
+const page = async() => {
+
   return (
     <div>
-        <h1>Books</h1>
+        <BookList/>
     </div>
   )
 }
