@@ -6,7 +6,7 @@ const page = async() => {
 
   return (
     <div>
-        <BookList/>
+        <BookList route="book?"/>
     </div>
   )
 }
