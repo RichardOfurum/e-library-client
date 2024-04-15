@@ -13,7 +13,7 @@ const page:React.FC <any> = ({params}) => {
   return (
     <div style={{display:"flex", flexDirection:"column", gap:"20px"}}>
       <BookDetails id={params.id}/>
-      <BookList/>
+      <BookList route="book?"/>
     </div>
   )
 }

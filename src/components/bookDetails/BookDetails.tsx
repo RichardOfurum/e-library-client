@@ -109,7 +109,7 @@ const BookDetails:React.FC <Props> = ({id}) => {
                             bookData.categories.map((category:any) =>(
                                 <Link 
                                     className={styles.category}
-                                    href={`/categories/${category}`}
+                                    href={`/book/categories/${category}`}
                                     key={category}>{category}</Link>
                             ))
                         }
