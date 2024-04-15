@@ -35,16 +35,15 @@ const Book:React.FC<Props> = ({author, imageUrl, title, id}) => {
     <div className={styles.book}>
         <Link
             href={`/book/${id}`}
-            // href={`/blog/${post.id}`}
+
             className={styles.book_container}>
             <div className={styles.image_container}>
-                {/* <p>{id}</p> */}
+             
                     <Image
                         className={styles.book_image}
-                        src={img} height={500} width={400} alt="image" 
+                        src={img || "/image"} height={500} width={400} alt="image" 
                     />
 
-                    {/* {imageUrl} */}
                 </div>
                 <div className={styles.text_container}>
                     <span className={styles.title}>{title}</span>
