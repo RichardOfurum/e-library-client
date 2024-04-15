@@ -6,11 +6,13 @@ import { useUserStore } from '@/store/userStore';
 import BigLoader from '../bigLoader/BigLoader';
 import axios from 'axios';
 import SmallLoader from '../smallLoader/SmallLoader';
-// type Props ={
 
-// }
 
-const BookList:React.FC = () => {
+type Props ={
+  route:string
+}
+
+const BookList:React.FC<Props> = ({route}) => {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [erroMessage, setErrorMessage] = useState<string>();
@@ -97,7 +99,8 @@ const BookList:React.FC = () => {
   const fetchBooks = async () => {
     setLoading(true);
     try {
-      const response = await axios.get<any[]>(`${baseUrl}book?page=${page}&limit=${limit}`);
+      const response = await axios.get<any[]>(`${baseUrl}${route}page=${page}&limit=${limit}`);
+      // const response = await axios.get<any[]>(`${baseUrl}book?page=${page}&limit=${limit}`);
       const newBooks = response.data;
       if(newBooks.length < limit || newBooks.length <= 0){
         setDisableLoadMore(true);

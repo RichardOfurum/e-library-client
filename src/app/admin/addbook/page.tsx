@@ -604,7 +604,7 @@ const AddBook = () => {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${token}`
+                'Authorization': `Bearer ${token}`
             },
         };
 
@@ -629,8 +629,8 @@ const AddBook = () => {
             }
 
             console.log(data);
-        } catch (error) {
-            console.error('Error:', error);
+        } catch (error: any) {
+            console.error('Error:', error.message);
             setErrorMessage("Something went wrong, please reload the page");
         }
     };
