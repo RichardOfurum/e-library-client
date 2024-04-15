@@ -97,7 +97,7 @@ const BookList:React.FC = () => {
   const fetchBooks = async () => {
     setLoading(true);
     try {
-      const response = await axios.get<any[]>(`http://localhost:4000/api/book?page=${page}&limit=${limit}`);
+      const response = await axios.get<any[]>(`${baseUrl}book?page=${page}&limit=${limit}`);
       const newBooks = response.data;
       if(newBooks.length < limit || newBooks.length <= 0){
         setDisableLoadMore(true);
