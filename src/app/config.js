@@ -5,6 +5,14 @@ import { getStorage } from "firebase/storage";
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+//   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+//   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+//   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+//   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_DENDER_ID,
+//   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID
+// };
 const firebaseConfig = {
   apiKey: "AIzaSyAksOGveXrCV2B2pnFxs7l_6nwJxoYMKkA",
   authDomain: "speedload-fc3d6.firebaseapp.com",
