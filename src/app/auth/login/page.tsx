@@ -34,10 +34,8 @@ const isLoggedin = useUserStore((state) => state.user_data.isLoggedin);
 const isAdmin = useUserStore((state) => state.user_data.isAdmin);
 
 const loginUserAndAdmin = () =>{
-    if (loggedIn && admin) {
-        router.push('/admin');
-    }else if(loggedIn){
-        router.push('/book');
+   if(loggedIn){
+        router.back();
     }
 }
 
@@ -73,6 +71,7 @@ const loginUserAndAdmin = () =>{
                 const data = await response.json();
 
                 if (data.statusCode == 400) {
+                    alert("yes")
                     setError(true);
                     setErrorMessage(data.message)
                     setLoading(false)

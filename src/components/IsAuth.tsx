@@ -5,23 +5,23 @@ import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 const IsAuth:React.FC = () => {
-  const [login, setLogin] = useState<boolean>();
+  const [login, setLogin] = useState<boolean>(true);
   const isLoggedin = useUserStore(state => state.user_data.isLoggedin)
 
   const router = useRouter();
 
   const checkLoginState = () =>{
-    if(login == false){
-      router.push('/auth/login')
-    }
+      if(!login){
+        router.push('/auth/login')
+      }
   }
 
-  useLayoutEffect(() =>{
-    setLogin(isLoggedin);
+  useEffect(() =>{
+      setLogin(isLoggedin);
   },[isLoggedin]);
 
   useEffect(() =>{
-    checkLoginState();
+      checkLoginState();
   },[login])
 
   return <> </>

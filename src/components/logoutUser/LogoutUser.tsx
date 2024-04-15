@@ -9,7 +9,7 @@ type Props = {
 
 const LogoutUser:React.FC<Props> = ({setShowLogOut}) => {
     const router = useRouter();
-    
+
     const resetUser = useUserStore(state => state.reset); 
 
     const redirectUser = async () =>{
@@ -32,7 +32,6 @@ const LogoutUser:React.FC<Props> = ({setShowLogOut}) => {
                 <button onClick={() => setShowLogOut(false)}
                 className={styles.cancel_btn}
                 >Cancel</button>
-
                 <button className={styles.logout_btn} onClick={logoutUser}>LogOut</button>
             </div>
         </div>

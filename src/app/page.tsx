@@ -21,7 +21,7 @@ export default function Home() {
 
               <Link 
                 className="sign_up"
-                href="/auth/login"
+                href="/book"
                 style={{border:"none", paddingLeft:"20px", paddingRight:"20px", paddingTop:"10px", paddingBottom:"10px",
                 fontWeight:"bold",
                 cursor:"pointer",

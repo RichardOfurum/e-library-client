@@ -1,0 +1,29 @@
+.side_menu{
+    display: flex;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.side_menu_container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.links{
+  text-decoration: none;  
+  color: rgb(29, 27, 27);
+  font-weight: bold;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+
+
+}
+
+.links:hover{
+    background-color: white;
+}

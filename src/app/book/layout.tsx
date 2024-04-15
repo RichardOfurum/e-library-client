@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import IsAuth from "@/components/IsAuth";
 import IsAdmin from "@/components/IsAdmin";
 import styles from './layout.module.css';
 import Nav from "@/components/nav/Nav";
-
-const inter = Inter({ subsets: ["latin"] });
+import SideMenu from "@/components/sideMenu/SideMenu";
 
 export const metadata: Metadata = {
   title: "user",
@@ -22,8 +20,19 @@ export default function RootLayout({
       <body className={styles.layout_body} >
         <IsAuth/>
         <Nav/>
-        {/* <IsAdmin/> */}
-        {children}</body>
+            <div className={styles.body}>
+                <div className={styles.body_container}>
+                  <div className={styles.left}>
+                    <SideMenu/>
+                  </div>
+
+                  <div className={styles.right}>
+                      {children}
+                  </div>
+                  
+                </div>
+            </div>
+        </body>
     </html>
   );
 }

@@ -4,12 +4,15 @@ import styles from './Nav.module.css';
 import { BiSearch, BiUser } from 'react-icons/bi';
 import { useUserStore } from '@/store/userStore';
 import MobileNav from './MobileNav';
+import Link from 'next/link';
 
 const Nav:React.FC = () => {
 
     const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
 
     const username = useUserStore(state => state.user_data.username);
+
+    const isAdmin = useUserStore((state) => state.user_data.isAdmin);
   return (
     <div className={styles.nav}>
         <div className={styles.nav_container}>
@@ -23,6 +26,15 @@ const Nav:React.FC = () => {
 
                 <BiSearch className={styles.search_icon_mobile}/>
             </div>
+
+            <div>
+                {
+                    isAdmin &&
+                    <Link 
+                        style={{textDecoration:"none", color:"darkgray"}}
+                    href="/admin">Admin</Link>
+                }
+            </div>
            
             <div className={styles.right}>
                 <p>{username}</p>
@@ -30,12 +42,10 @@ const Nav:React.FC = () => {
             </div>
             
             <div className={styles.right_mobile} onClick={() => setShowMobileNav(!showMobileNav)}>
-                {/* <p>{username}</p> */}
-                <p>mobile</p>
+                <p>{username}</p>
                 <BiUser/>
             </div>
-
-
+            
         </div>
 
         {/* display mobile nav */}

@@ -1,3 +1,60 @@
 .layout_body{
     background-color: whitesmoke;
 }
+
+.body{
+    display: flex;
+    width: 100%;
+    /* background-color: red; */
+    justify-content: center;
+}
+
+.body_container{
+    display: flex;
+    width: 80%;
+    gap: 20px;
+    /* background-color: green; */
+}
+
+.left{
+    /* background-color: green; */
+    width: 150px;
+}
+
+.right{
+    /* background: rgb(255,255,255);
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(233,229,233,1) 100%, rgba(255,255,255,1) 100%); */
+    background-color: white;
+    padding: 20px;
+    width: 70%;
+    flex: 1;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    min-height: 100vh;
+}
+
+
+/* Styles for desktops and laptops */
+@media only screen and (min-width: 1024px) {
+    /* Your CSS styles for desktops and laptops here */
+  }
+  
+  /* Styles for tablets */
+  @media only screen and (min-width: 768px) and (max-width: 1023px) {
+    /* Your CSS styles for tablets here */
+    .body_container{
+        width: 95%;
+    }
+  }
+  
+  /* Styles for mobile phones */
+  @media only screen and (max-width: 767px) {
+    /* Your CSS styles for mobile phones here */
+    .body_container{
+        width: 98%;
+    }
+
+    .left{
+        display: none;
+    }
+  }
