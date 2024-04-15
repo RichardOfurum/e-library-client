@@ -21,6 +21,8 @@ const BookDetails:React.FC <Props> = ({id}) => {
     const [error, setError] = useState<string | null>(null);
 
     const token = useUserStore((state) => state.user_data.token);
+
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   
     useEffect(() => {
       const fetchBookData = async () => {
@@ -32,7 +34,7 @@ const BookDetails:React.FC <Props> = ({id}) => {
             },
           };
   
-          const response: AxiosResponse = await axios.get(`http://localhost:4000/api/book/${id}`, config);
+          const response: AxiosResponse = await axios.get(`${baseUrl}book/${id}`, config);
           setBookData(response.data);
           setLoading(false);
         } catch (error: any) {
