@@ -36,6 +36,7 @@
       justify-content: space-between;
       align-items: center;
       /* background-color: red; */
+      width: 100%;
   }
   
   
@@ -73,11 +74,15 @@
   }
 
   .landing_footer{
+    width: 100%;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
     justify-content: center;
     margin-bottom: 20px;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-color: red;
   }
 
   .landing_footer > p{
@@ -87,7 +92,9 @@
     padding: 20px;
     border-radius: 5px;
     cursor: pointer;
+    flex: 1;
   }
+
 
   /* Styles for desktops and laptops */
 @media only screen and (min-width: 1024px) {
@@ -103,6 +110,17 @@
 @media only screen and (max-width: 767px) {
   /* Your CSS styles for mobile phones here */
   .hero_text{
-    font-size: 45px;
+    font-size: 25px;
+    text-align: center;
   }
+
+  /* .hero_paragraph{
+      color:"whitesmoke";
+      text-shadow: "2px 2px 5px rgba(0, 0, 0.5)";
+      font-size:"20px";
+  } */
+
+  
+
+  
 }
