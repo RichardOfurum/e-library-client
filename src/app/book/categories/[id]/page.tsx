@@ -14,7 +14,9 @@ const page:React.FC <any> = ({params}) => {
       {/* <BookDetails id={params.id}/> */}
       {/* <BookList /> */}
       {/* <Categories id={params.id}/> */}
-      <h1>Category: </h1> <span>{params.id}</span>
+      <div style={{display:"flex", gap:"10px"}}>
+          <p style={{fontWeight:"bold"}}>Category: </p> <p>{params.id}</p>
+      </div>
       <BookList route={`book/search/category?category=${params.id}&`}/>
     </div>
   )
