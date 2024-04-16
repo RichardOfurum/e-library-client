@@ -22,7 +22,9 @@ const MobileNav:React.FC<Props> = ({setShowMobileNav}) => {
   return (
     <div className={styles.mobile_nav}>
         <div className={styles.mobile_nav_container}>
-            <Link href="/book" className={styles.links}> Home </Link>
+            <Link 
+                onClick={() => setShowMobileNav(false)}
+                href="/book" className={styles.links}> Home </Link>
 
 
             {/* <Link href="/categories" className={styles.links}> Categories </Link> */}
