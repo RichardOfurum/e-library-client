@@ -22,7 +22,7 @@ const BookList:React.FC<Props> = ({route}) => {
   const [disableLoadMore, setDisableLoadMore] = useState<boolean>(false);
 
   const [page, setPage] = useState<number>(1);
-  const [limit, setLimit] = useState<number>(5); // Set the limit to 2
+  const [limit, setLimit] = useState<number>(50); // Set the limit to 2
 
   const [books, setBooks] = useState<any[]>([]);
 
