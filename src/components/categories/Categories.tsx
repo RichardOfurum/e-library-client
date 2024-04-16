@@ -8,9 +8,10 @@ import { CgClose } from 'react-icons/cg'
 import SmallLoader from '../smallLoader/SmallLoader'
 
 type Props = {
-    setShowCategoryList: (setShowLogOut: boolean) => void
+    setShowCategoryList: (setShowLogOut: boolean) => void;
+    setShowMobileNav?: (value: boolean) => void;
 }
-const Categories:React.FC<Props> = ({setShowCategoryList}) => {
+const Categories:React.FC<Props> = ({setShowCategoryList, setShowMobileNav}) => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const userToken = useUserStore(state => state.user_data.token);
     const [loading, setLoading] = useState<boolean>(false);
@@ -79,7 +80,7 @@ const Categories:React.FC<Props> = ({setShowCategoryList}) => {
                                 getCategories.map((cat: any) => (
                                     
                                     <Link 
-                                        onClick={() => {setShowCategoryList(false)}}
+                                        onClick={() => {setShowCategoryList(false); setShowMobileNav && setShowMobileNav  (false)}}
 
                                         key={cat._id} 
 
