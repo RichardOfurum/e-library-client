@@ -43,7 +43,7 @@ const SearchBox:React.FC<Props> = ({setShowSearchBox}) => {
                 <form onSubmit={handleSubmit}> {/* Attach handleSubmit to onSubmit */}
                     <div className={styles.input_container}>
                         {/* Add a name attribute to the input for better form submission */}
-                        <input ref={searchRef} type="text" name="search" />
+                        <input ref={searchRef} type="text" name="search" required/>
                         <button type='submit'>Search</button>
                     </div>
                 </form>
