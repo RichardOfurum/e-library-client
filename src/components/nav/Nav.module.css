@@ -96,5 +96,6 @@
 
     .search_icon_mobile{
         display: block;
+        cursor: pointer;
     }
   }

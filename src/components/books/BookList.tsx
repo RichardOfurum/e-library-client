@@ -127,11 +127,19 @@ useEffect(() => {
   return (
     <div className={styles.books}>
         <div className={styles.books_container}>
+
+          {
+              loading &&
+
+              <div className={styles.load_more_container}>
+                <BigLoader dark={true}/>
+              </div>
+          }
         
             {
               (books.length <= 0)?
               <div className={styles.load_more_container}>
-                <BigLoader dark={true}/>
+                <p>No record found</p>
               </div> :
               books.map((book:any) =>(
                 <div 
