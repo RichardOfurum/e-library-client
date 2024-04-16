@@ -5,10 +5,13 @@ import { BiSearch, BiUser } from 'react-icons/bi';
 import { useUserStore } from '@/store/userStore';
 import MobileNav from './MobileNav';
 import Link from 'next/link';
+import SearchBox from '../searchBox/SearchBox';
 
 const Nav:React.FC = () => {
 
     const [showMobileNav, setShowMobileNav] = useState<boolean>(false);
+
+    const [showSearchBox, setShowSearchBox] = useState<boolean>(false);
 
     const username = useUserStore(state => state.user_data.username);
 
@@ -19,12 +22,16 @@ const Nav:React.FC = () => {
             <div className={styles.left}>
                 <h3>E-Library</h3>
 
-                <div className={styles.search_box}>
+                <div 
+                    onClick={() =>{setShowSearchBox(!showSearchBox)}}
+                    className={styles.search_box}>
                     <BiSearch className={styles.search_icon}/>
-                    <p>Search for name, author or category</p>
+                    <p>Search for title, author or category</p>
                 </div>
 
-                <BiSearch className={styles.search_icon_mobile}/>
+                <BiSearch 
+                    onClick={() =>{setShowSearchBox(!showSearchBox)}}
+                    className={styles.search_icon_mobile}/>
             </div>
 
             <div>
@@ -53,6 +60,12 @@ const Nav:React.FC = () => {
         {
             showMobileNav &&
             <MobileNav setShowMobileNav={setShowMobileNav}/>
+        }
+        
+        {
+            showSearchBox &&
+            
+            <SearchBox setShowSearchBox={setShowSearchBox}/>
         }
     </div>
   )
