@@ -47,7 +47,7 @@ export default function Home() {
                   fontSize:"17px",
                   textAlign:"center",
                 }}
-              >Holly Rosary Hospital Emekuku</p>
+              >Holy Rosary Hospital Emekuku</p>
           </section>
 
           <section 
