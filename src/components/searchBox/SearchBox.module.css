@@ -52,7 +52,7 @@
     font-size: 18x;
     padding-left: 10px;
     padding-right: 10px;
-    width: auto;
+    width: 70%;
 }
 
 .input_container > button{
@@ -63,6 +63,7 @@
     color: white;
     padding-left: 10px;
     padding-right: 10px;
+    width: 20%;
 }
 
 .close_search{
