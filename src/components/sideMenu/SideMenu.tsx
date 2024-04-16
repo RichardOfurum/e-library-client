@@ -4,14 +4,24 @@ import styles from './SideMenu.module.css';
 import Link from 'next/link';
 import { CgClose } from 'react-icons/cg';
 import LogoutUser from '../logoutUser/LogoutUser';
+import Categories from '../categories/Categories';
+import { useUserStore } from '@/store/userStore';
 
 const SideMenu:React.FC = () => {
+
+    
+
     const [showLogout, setShowLogOut] = useState<boolean>();
+    const [showCategoryList, setShowCategoryList] = useState<boolean>();
+
+
+
+
   return (
     <div className={styles.side_menu}>
         <div className={styles.side_menu_container}>
         <Link href="/book" className={styles.links}> Home </Link>
-            <Link href="/categories" className={styles.links}> Categories </Link>
+            <p onClick={() => setShowCategoryList(!showCategoryList)} className={styles.links}> Categories </p>
             <p onClick={() => setShowLogOut(true)} className={styles.links}> Logout </p>
 
         </div>
@@ -19,6 +29,10 @@ const SideMenu:React.FC = () => {
         {
             showLogout && 
             <LogoutUser setShowLogOut={setShowLogOut}/>
+        }
+        {
+            showCategoryList && 
+            <Categories setShowCategoryList={setShowCategoryList}/>
         }
     </div>
   )
