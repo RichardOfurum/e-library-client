@@ -37,13 +37,15 @@ export default function Home() {
               alignItems:"center"
             }}
           >
-              <h1 className="hero_text">School Of Nuresing</h1>
+              <h1 
+              className="hero_text">School Of Nuresing</h1>
               <p
+                className="hero_paragraph"
                 style={{
                   color:"whitesmoke",
                   textShadow: "2px 2px 5px rgba(0, 0, 0.5)",
-                  fontSize:"20px",
-
+                  fontSize:"17px",
+                  textAlign:"center",
                 }}
               >Holly Rosary Hospital Emekuku</p>
           </section>
