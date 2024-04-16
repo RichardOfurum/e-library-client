@@ -42,7 +42,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    
 }
 
 .welcome > h1{
@@ -119,12 +119,40 @@
   /* Styles for mobile phones */
   @media only screen and (max-width: 767px) {
     /* Your CSS styles for mobile phones here */
+    .login{
+        width: 100%;
+        /* background-color: gray; */
+        display: flex;
+        justify-content: center;
+    }
+
     .right{
         display: none;
     }
 
-    .left{
-        margin-left: 10px;
-        margin-right: 10px;
+
+    .login_container{
+        width: 100%;
+        /* background-color: red; */
     }
+
+    .input_container > input, .input_container > button{
+        width: auto;
+        height: 40px;
+        /* background-color: pink; */
+        /* padding: 10px; */
+    }
+
+    .left{
+        /* background-color: green; */
+        width: 100%;
+    }
+    
+    .left_container > form{
+        /* background-color: aqua; */
+        width: 80%;
+    }
+    /* .input_container > button{
+        width: 95%;
+    } */
   }
