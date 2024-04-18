@@ -5,7 +5,7 @@ import Back from '@/components/back/Back'
 import { useUserStore } from '@/store/userStore'
 import SmallLoader from '@/components/bigLoader/BigLoader'
 
-const page = () => {
+const CrearteUserpage = () => {
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const userToken = useUserStore(state => state.user_data.token);
@@ -110,4 +110,4 @@ const page = () => {
   )
 }
 
-export default page
+export default CrearteUserpage
