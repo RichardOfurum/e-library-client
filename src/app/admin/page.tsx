@@ -6,6 +6,12 @@ const page = () => {
     <div>
       <h1>Admin dashboard</h1>
       <Link href="/admin/addbook">Add Book</Link>
+      <br />
+      <br />
+      <Link href="/admin/user/createUser">create user</Link>
+      <br />
+      <br />
+      <Link href="/admin/user/createAdmin">create admin</Link>
     </div>
   )
 }

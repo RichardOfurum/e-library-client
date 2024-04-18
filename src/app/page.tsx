@@ -38,7 +38,7 @@ export default function Home() {
             }}
           >
               <h1 
-              className="hero_text">School Of Nuresing</h1>
+              className="hero_text">College of Nursing</h1>
               <p
                 className="hero_paragraph"
                 style={{
