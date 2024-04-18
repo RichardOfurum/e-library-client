@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 import { useRouter } from 'next/navigation';
