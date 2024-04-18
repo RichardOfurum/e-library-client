@@ -43,7 +43,7 @@ const CreateAdminpage = () => {
     
             setLoading(false);
             console.log('User created successfully');
-            setSuccessMessage("User created successfully");
+            setSuccessMessage("Admin created successfully");
 
             return await response.json();
         } catch (error:any) {
