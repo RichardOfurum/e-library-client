@@ -20,6 +20,8 @@ const CrearteUserpage = () => {
 
     const createUser = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setErrorMessage("");
+        setSuccessMessage("");
         setLoading(true)
         const url = baseUrl + 'auth/register/';
 
@@ -42,6 +44,8 @@ const CrearteUserpage = () => {
             }
     
             setLoading(false);
+            setUsername("");
+            setPassword("");
             console.log('User created successfully');
             setSuccessMessage("User created successfully");
 

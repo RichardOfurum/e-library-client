@@ -37,3 +37,8 @@
     width: 90px;
 }
 
+.edit_delete{
+    display: flex;
+    justify-content: space-between;
+}
+

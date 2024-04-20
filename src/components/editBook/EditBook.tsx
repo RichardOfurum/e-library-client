@@ -3,15 +3,18 @@
 import React, { useLayoutEffect, useState, useRef, useEffect } from 'react';
 import styles from './AddBook.module.css';
 import { useUserStore } from '@/store/userStore';
-import { storage } from '../../config';
+// import { storage } from '../../../config';
+import { storage } from '@/app/config';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import Back from '@/components/back/Back';
 import SmallLoader from '@/components/bigLoader/BigLoader';
 
+type Props = {
+    id:string;
+}
 
-
-const AddBook = () => {
+const EditBook:React.FC <Props> = ({id}) => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const userToken = useUserStore(state => state.user_data.token);
 
@@ -35,6 +38,8 @@ const AddBook = () => {
     const [image, setImage] = useState<string>('');
     const [bookUrl, setBookUrl] = useState<string>('');
 
+
+
     const handleUpload = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault(); // Prevent the default form submission
       
@@ -45,8 +50,21 @@ const AddBook = () => {
       
         if (imageFile && pdfFile) {
             try {
-                const imageRef = ref(storage, `book_images/${imageFile.name + Date.now()}`);
-                const pdfRef = ref(storage, `book_pdfs/${pdfFile.name + Date.now()}`);
+                
+                let imageRef;
+                let pdfRef;
+
+                if(image){
+                    imageRef = ref(storage, `book_images/${image}`);
+                }else{
+                    imageRef = ref(storage, `book_images/${imageFile.name + Date.now()}`);
+                }
+                
+                if(bookUrl){
+                    pdfRef = ref(storage, `book_pdfs/${bookUrl}`);   
+                }else{
+                    pdfRef = ref(storage, `book_pdfs/${pdfFile.name + Date.now()}`);
+                }
 
                 const imageSnapshot = await uploadBytes(imageRef, imageFile);
                 const pdfSnapshot = await uploadBytes(pdfRef, pdfFile);
@@ -60,7 +78,11 @@ const AddBook = () => {
                 // If both image and pdf upload processes are successful,
                 // then call handleSubmit
                
-                // handleSubmit();
+                setTimeout(() =>{
+                    handleSubmit();
+                },2);
+
+                
                 setSuccessMessage("image and pdf uploaded")
             } catch (error: any) {
                 setLoading(false);
@@ -69,8 +91,9 @@ const AddBook = () => {
                 return;
             }
         } else {
+            handleSubmit();
             setLoading(false);
-            console.log('Please select both an image and a PDF file');
+            console.log('No image selected');
         }
     };
 
@@ -81,7 +104,7 @@ const AddBook = () => {
         setErrorMessage('');
         setSuccessMessage('');
     
-        const url = baseUrl + 'book/';
+        const url = baseUrl + 'book/'+ id;
     
         const token = userToken; // Replace with your authentication token
 
@@ -99,7 +122,7 @@ const AddBook = () => {
 
         try {
             const response = await fetch(url, {
-                method: 'POST',
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -128,28 +151,11 @@ const AddBook = () => {
             setImage("");
             setBookUrl("");
             setCategories([]);
-
-            if (imageRef.current) {
-                imageRef.current.value = '';
-            }
-
-            if (urlRef.current) {
-                urlRef.current.value = '';
-            }
             // return await response.json();
         } catch (error:any) {
             setLoading(false);
             console.log("something went wrong");
 
-            // console.log("title : ", title)
-            // console.log("author : ", author)
-            // console.log("description : ", description)
-            // console.log("publisher : ", publisher)
-            // console.log("publishedDate : ", publishedDate)
-            // console.log("pages : ", pages)
-            // console.log("image : ", image)
-            // console.log("bookUrl : ", bookUrl)
-            // console.log("categories : ", categories)
             setErrorMessage("something went wrong, please reload the page and try again");
             console.error('Error:', error.message);
             // Handle error cases as needed
@@ -203,11 +209,11 @@ const AddBook = () => {
         }
     };
 
-    useEffect(() =>{
-        if((image.length > 0) && (bookUrl.length > 0) ){
-            handleSubmit();
-        }
-    },[image, bookUrl]);
+    // useEffect(() =>{
+    //     if((image.length > 0) && (bookUrl.length > 0) ){
+    //         handleSubmit();
+    //     }
+    // },[image, bookUrl]);
 
     useLayoutEffect(() => {
         handleFetchCategories();
@@ -226,12 +232,66 @@ const AddBook = () => {
         }
     };
 
+    useEffect(() => {
+        const fetchBookData = async () => {
+    
+            const token = userToken; 
+          try {
+            
+            const config = {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            };
+    
+            const response: AxiosResponse = await axios.get(`${baseUrl}book/${id}`, config);
+            // setBookData(response.data);
+            const data = response.data;
+
+            setTitle(data.title);
+            setAuthor(data.author);
+            setDescription(data.description);
+            setPublisher(data.publishedDate);
+            setPublishedDate(data.publishedDate);
+            setPages(data.pages);
+            setImage(data.image);
+            setBookUrl(data.url);
+
+            
+            setCategories(data.categories);
+            
+                // setCategories(categories.filter(val => val !== value));
+            
+
+            setLoading(false);
+          } catch (error: any) {
+            if (error.response) {
+              // Request was made and server responded with a status code that falls out of the range of 2xx
+              setErrorMessage(`Server responded with status ${error.response.status}: ${error.response.data}`);
+            } else if (error.request) {
+              // Request was made but no response was received
+              setErrorMessage('No response received from server');
+            } else {
+              // Something else happened while setting up the request
+              setErrorMessage('Error setting up the request');
+            }
+            setLoading(false);
+          }
+        };
+    
+        fetchBookData();
+    
+        return () => {
+          // Cleanup
+        };
+      }, []);
+
     return (
         <div className={styles.add_book}>
 
             <Back/>
 
-            <h3>Add new book</h3>
+            <h3>Edit book</h3>
 
             <div className={styles.add_book_container}>
 
@@ -296,12 +356,12 @@ const AddBook = () => {
                     
                     <div className={styles.input_container}>
                         <label htmlFor="image">Cover Image</label>
-                        <input type="file" ref={imageRef} accept="image/*" required/>
+                        <input type="file" ref={imageRef} accept="image/*" />
                     </div>
                     
                     <div className={styles.input_container}>
                         <label htmlFor="pdf">PDF file</label>
-                        <input type="file" ref={urlRef} accept=".pdf" required/>
+                        <input type="file" ref={urlRef} accept=".pdf" />
                     </div>
 
                     {
@@ -326,7 +386,7 @@ const AddBook = () => {
                                     </div>
                                 ) : (
                                     <span>
-                                        Add Book
+                                        Update Book
                                     </span>
                                 )
                             }
@@ -340,5 +400,5 @@ const AddBook = () => {
     );
 };
 
-export default AddBook;
+export default EditBook;
 

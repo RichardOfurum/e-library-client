@@ -31,70 +31,7 @@ const BookList:React.FC<Props> = ({route}) => {
   const getUserToken = useUserStore(state => state.user_data.token) 
 
 
-  // const handleFetchBooks = async() =>{
-       
-  //   setLoading(true);
-
-  //   const url = baseUrl + `book?page=${page}&limit=${limit}/`;
-  //   // const url = baseUrl + `book?page=${pageNumber+1}&limit=${1}/`;
-
-  //   console.log(url)
-
-
-  //       const token = userToken; // Replace with your authentication token
-    
-  //       const requestOptions = {
-  //           method: 'GET',
-  //           headers: {'Content-Type': 'application/json',
-  //               'Authorization': `Bearer ${token}`
-  //           },
-            
-  //       };
-
-  //       try {
-
-  //           const response = await fetch(url, requestOptions);
-        
-  //           //   alert("working")
-  //           if (!response.ok) {
-  //               setLoading(false)
-  //               // throw new Error(`Request failed with status ${response.status}`);
-  //               console.log("something went wrong")
-  //           }
-
-  //           const data = await response.json();
-
-  //           if (data.statusCode == 400) {
-  //                   setErrorMessage(data.message)
-  //                   setLoading(false)
-  //           }else{
-  //               if (data.statusCode == 500) {
-  //                   setLoading(false)
-  //                   setErrorMessage("please check your internet connection");
-  //               }else{
-  //                   setLoading(false);
-                    
-  //                   if (data.lenght < limit) {
-  //                       alert("end")
-  //                   }
-
-  //                   setBooks(prevBooks => [...prevBooks, ...data]);
-
-  //                   // console.log(updatedData)
-                    
-  //                   // setSuccessMessage("New User Added")
-  //               }
-                    
-  //           }
-
-  //       console.log(data); // Process the data here
-        
-  //       } catch (error) {
-  //           console.error('Error:', error);
-  //           setErrorMessage("something went wrong, please reload the page")
-  //       }
-    
-  //   }
+  
 
   const fetchBooks = async () => {
     setLoading(true);

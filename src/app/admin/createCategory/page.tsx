@@ -1,29 +1,28 @@
 'use client'
-import React,{useState} from 'react'
+import Back from '@/components/back/Back';
+import { useUserStore } from '@/store/userStore';
+import React, { useState } from 'react';
 import styles from './CreateUser.module.css'
-import Back from '@/components/back/Back'
-import { useUserStore } from '@/store/userStore'
-import SmallLoader from '@/components/bigLoader/BigLoader'
+import SmallLoader from '@/components/bigLoader/BigLoader';
 
-const CreateAdminpage = () => {
-
+const CreateCategoryPage = () => {
+  
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const userToken = useUserStore(state => state.user_data.token);
 
     
-    const [username, setUsername] = useState<string>("");
-    const [password, setPassword] = useState<string>("");
+    const [name, setName] = useState<string>("");
 
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [successMessage, setSuccessMessage] = useState<string>("");
     const[loading, setLoading] = useState<boolean>(false);
 
-    const createUser = async (e:React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setErrorMessage("");
-        setSuccessMessage("");
         setLoading(true)
-        const url = baseUrl + 'auth/register/';
+        setSuccessMessage("");
+        setErrorMessage("");
+        const url = baseUrl + 'category/';
 
         const token = userToken;
 
@@ -34,25 +33,24 @@ const CreateAdminpage = () => {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ username, password, isAdmin:true })
+                body: JSON.stringify({ name})
             });
     
             if (!response.ok) {
                 setLoading(false);
-                setErrorMessage("faild to create user please check your data and try again or try refreshing the page");
+                setErrorMessage("faild to create Category please check your data and try again or try refreshing the page");
                 throw new Error(`Request failed with status ${response.status}`);
             }
     
             setLoading(false);
-            setUsername("");
-            setPassword("");
-            console.log('User created successfully');
-            setSuccessMessage("Admin created successfully");
+            setName("");
+            console.log('Category created successfully');
+            setSuccessMessage("Category created successfully");
 
             return await response.json();
         } catch (error:any) {
             setLoading(false);
-            setErrorMessage("faild to create user please check your data and try again or try refreshing the page");
+            setErrorMessage("faild to create category please check your data and try again or try refreshing the page");
             console.error('Error:', error.message);
             // Handle error cases as needed
         }
@@ -64,16 +62,13 @@ const CreateAdminpage = () => {
         <h3>Create admin</h3>
         <div className={styles.create_user_container}>
         
-            <form onSubmit={createUser}>
+            <form onSubmit={handleSubmit}>
                 <div className={styles.input_container}>
-                    <label htmlFor="username">Username</label>
-                    <input type="text" value={username} onChange={e => setUsername(e.target.value)} required/>
+                    <label htmlFor="name">name</label>
+                    <input type="text" value={name} onChange={e => setName(e.target.value)} required/>
                 </div>
                 
-                <div className={styles.input_container}>
-                    <label htmlFor="password">Password</label>
-                    <input type="password" value={password} onChange={e => setPassword(e.target.value)} required/>
-                </div>
+                
                 
                 <div className={styles.input_container}>
                     {
@@ -111,7 +106,8 @@ const CreateAdminpage = () => {
             </form>
         </div>
     </div>
+  
   )
 }
 
-export default CreateAdminpage
+export default CreateCategoryPage

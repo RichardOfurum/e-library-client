@@ -12,6 +12,9 @@ const page = () => {
       <br />
       <br />
       <Link href="/admin/user/createAdmin">create admin</Link>
+      <br />
+      <br />
+      <Link href="/admin/createCategory">create category</Link>
     </div>
   )
 }

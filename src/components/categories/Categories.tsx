@@ -6,6 +6,7 @@ import BookList from '../books/BookList'
 import { useUserStore } from '@/store/userStore'
 import { CgClose } from 'react-icons/cg'
 import SmallLoader from '../smallLoader/SmallLoader'
+import Delete from '../delete/Delete'
 
 type Props = {
     setShowCategoryList: (setShowLogOut: boolean) => void;
@@ -14,7 +15,10 @@ type Props = {
 const Categories:React.FC<Props> = ({setShowCategoryList, setShowMobileNav}) => {
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const userToken = useUserStore(state => state.user_data.token);
+    const isAdmin = useUserStore(state => state.user_data.isAdmin);
+
     const [loading, setLoading] = useState<boolean>(false);
+    
     const [errorMessage, setErrorMessage] = useState<string>("");
     const [successMessage, setSuccessMessage] = useState<string>("");
 
@@ -79,16 +83,25 @@ const Categories:React.FC<Props> = ({setShowCategoryList, setShowMobileNav}) => 
                             Array.isArray(getCategories) ? (
                                 getCategories.map((cat: any) => (
                                     
-                                    <Link 
-                                        onClick={() => {setShowCategoryList(false); setShowMobileNav && setShowMobileNav  (false)}}
+                                    <div key={cat._id} 
+                                        style={{display:"flex", justifyContent:"space-between", width:"100%"}}
+                                    >
+                                        <Link 
+                                            onClick={() => {setShowCategoryList(false); setShowMobileNav && setShowMobileNav  (false)}}
 
-                                        key={cat._id} 
+                                            
 
-                                        href={`/book/categories/${cat?.name}`}
-                                        className={styles.category}
-                                        >{cat?.name}
+                                            href={`/book/categories/${cat?.name}`}
+                                            className={styles.category}
+                                            >{cat?.name}
 
-                                    </Link>
+                                        </Link>
+                                        {
+                                            isAdmin &&
+                                            <Delete route="category" id={cat?._id} />
+                                        }
+                                        
+                                    </div>
                                     
                                     
                                 ))
