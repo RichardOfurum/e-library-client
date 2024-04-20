@@ -5,7 +5,7 @@ import styles from './AddBook.module.css';
 import { useUserStore } from '@/store/userStore';
 // import { storage } from '../../../config';
 import { storage } from '@/app/config';
-import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { StorageReference, getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import Back from '@/components/back/Back';
 import SmallLoader from '@/components/bigLoader/BigLoader';
@@ -15,6 +15,8 @@ type Props = {
 }
 
 const EditBook:React.FC <Props> = ({id}) => {
+
+
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
     const userToken = useUserStore(state => state.user_data.token);
 
@@ -48,53 +50,68 @@ const EditBook:React.FC <Props> = ({id}) => {
         const imageFile = imageRef.current?.files?.[0];
         const pdfFile = urlRef.current?.files?.[0];
       
-        if (imageFile && pdfFile) {
+        if (imageFile) {
             try {
-                
-                let imageRef;
-                let pdfRef;
-
-                if(image){
-                    imageRef = ref(storage, `book_images/${image}`);
-                }else{
-                    imageRef = ref(storage, `book_images/${imageFile.name + Date.now()}`);
-                }
-                
-                if(bookUrl){
-                    pdfRef = ref(storage, `book_pdfs/${bookUrl}`);   
-                }else{
-                    pdfRef = ref(storage, `book_pdfs/${pdfFile.name + Date.now()}`);
-                }
-
-                const imageSnapshot = await uploadBytes(imageRef, imageFile);
-                const pdfSnapshot = await uploadBytes(pdfRef, pdfFile);
-
+                const imageRef = ref(storage, `book_images/${imageFile.name + Date.now()}`);
+        
+                const imageSnapshot = await uploadBytes(imageRef, imageFile as Blob);
+        
                 const imageUrl = await getDownloadURL(imageSnapshot.ref);
-                const pdfUrl = await getDownloadURL(pdfSnapshot.ref);
-
+        
                 setImage(imageUrl);
-                setBookUrl(pdfUrl);
-                
-                // If both image and pdf upload processes are successful,
-                // then call handleSubmit
-               
-                setTimeout(() =>{
-                    handleSubmit();
-                },2);
 
+                // setTimeout(() =>{
+                //     handleSubmitWithImage();
+                // },3000);
                 
-                setSuccessMessage("image and pdf uploaded")
+                // If image upload process is successful, call handleSubmit
+             
+                setSuccessMessage("Image uploaded");
             } catch (error: any) {
                 setLoading(false);
-                setErrorMessage(error?.message)
+                setErrorMessage(error?.message);
                 console.log(error?.message);
                 return;
             }
         } else {
-            handleSubmit();
             setLoading(false);
-            console.log('No image selected');
+            console.log('Please select an image file');
         }
+        
+        // Handle PDF file upload
+        if (pdfFile) {
+            try {
+                const pdfRef = ref(storage, `book_pdfs/${pdfFile.name + Date.now()}`);
+        
+                const pdfSnapshot = await uploadBytes(pdfRef, pdfFile as Blob);
+        
+                const pdfUrl = await getDownloadURL(pdfSnapshot.ref);
+        
+                setBookUrl(pdfUrl);
+                
+                // setTimeout(() =>{
+                //     handleSubmitWithPdf();
+                // },3000);
+                // If PDF upload process is successful, call handleSubmit
+                
+        
+                setSuccessMessage("PDF uploaded");
+            } catch (error: any) {
+                setLoading(false);
+                setErrorMessage(error?.message);
+                console.log(error?.message);
+                return;
+            }
+
+           
+        } else {
+            setLoading(false);
+            console.log('Please select a PDF file');
+        }
+
+        handleSubmit();
+
+
     };
 
 
@@ -115,8 +132,6 @@ const EditBook:React.FC <Props> = ({id}) => {
             publisher,
             publishedDate,
             pages,
-            image,
-            url: bookUrl,
             categories
         };
 
@@ -136,22 +151,13 @@ const EditBook:React.FC <Props> = ({id}) => {
             }
             
             setLoading(false);
-            setSuccessMessage("New book added");
+            setSuccessMessage("Record updated");
 
-            console.log('New book added');
+            console.log('Record updated');
             const data = response.json()
             console.log(data);
 
-            setTitle("");
-            setAuthor("");
-            setDescription("");
-            setPublisher("");
-            setPublishedDate("");
-            setPages(0);
-            setImage("");
-            setBookUrl("");
-            setCategories([]);
-            // return await response.json();
+            
         } catch (error:any) {
             setLoading(false);
             console.log("something went wrong");
@@ -161,9 +167,116 @@ const EditBook:React.FC <Props> = ({id}) => {
             // Handle error cases as needed
         }
 };
-    
 
-   
+const handleSubmitWithImage = async () => {
+
+    setLoading(true);
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    const url = baseUrl + 'book/'+ id;
+
+    const token = userToken; // Replace with your authentication token
+
+    const body = {
+        title,
+        author,
+        description,
+        publisher,
+        publishedDate,
+        pages,
+        image,
+
+        categories
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (!response.ok) {
+            setLoading(false);
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+        
+        setLoading(false);
+        setSuccessMessage("Record updated");
+
+        console.log('Record updated');
+        const data = response.json()
+        console.log(data);
+
+        
+    } catch (error:any) {
+        setLoading(false);
+        console.log("something went wrong");
+
+        setErrorMessage("something went wrong, please reload the page and try again");
+        console.error('Error:', error.message);
+        // Handle error cases as needed
+    }
+};
+
+const handleSubmitWithPdf = async () => {
+
+    setLoading(true);
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    const url = baseUrl + 'book/'+ id;
+
+    const token = userToken; // Replace with your authentication token
+
+    const body = {
+        title,
+        author,
+        description,
+        publisher,
+        publishedDate,
+        pages,
+        url: bookUrl,
+        categories
+    };
+
+    try {
+        const response = await fetch(url, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(body)
+        });
+
+        if (!response.ok) {
+            setLoading(false);
+            throw new Error(`Request failed with status ${response.status}`);
+        }
+        
+        setLoading(false);
+        setSuccessMessage("Record updated");
+
+        console.log('Record updated');
+        const data = response.json()
+        console.log(data);
+
+        
+    } catch (error:any) {
+        setLoading(false);
+        console.log("something went wrong");
+
+        setErrorMessage("something went wrong, please reload the page and try again");
+        console.error('Error:', error.message);
+        // Handle error cases as needed
+    }
+};
+    
 
     const handleFetchCategories = async () => {
         setLoadingCategories(true);
@@ -234,36 +347,30 @@ const EditBook:React.FC <Props> = ({id}) => {
 
     useEffect(() => {
         const fetchBookData = async () => {
-    
-            const token = userToken; 
+            // alert("richard")
+        const token = userToken; 
           try {
             
-            const config = {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            };
-    
-            const response: AxiosResponse = await axios.get(`${baseUrl}book/${id}`, config);
-            // setBookData(response.data);
-            const data = response.data;
+                const config = {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                };
+        
+                const response: AxiosResponse = await axios.get(`${baseUrl}book/${id}`, config);
+                // setBookData(response.data);
+                const data = response.data;
 
-            setTitle(data.title);
-            setAuthor(data.author);
-            setDescription(data.description);
-            setPublisher(data.publishedDate);
-            setPublishedDate(data.publishedDate);
-            setPages(data.pages);
-            setImage(data.image);
-            setBookUrl(data.url);
+                setTitle(data.title);
+                setAuthor(data.author);
+                setDescription(data.description);
+                setPublisher(data.publishedDate);
+                setPublishedDate(data.publishedDate);
+                setPages(data.pages);            
+                setCategories(data.categories);
+                
 
-            
-            setCategories(data.categories);
-            
-                // setCategories(categories.filter(val => val !== value));
-            
-
-            setLoading(false);
+                setLoading(false);
           } catch (error: any) {
             if (error.response) {
               // Request was made and server responded with a status code that falls out of the range of 2xx
@@ -285,6 +392,19 @@ const EditBook:React.FC <Props> = ({id}) => {
           // Cleanup
         };
       }, []);
+
+
+      useEffect(() =>{
+        if (bookUrl.length > 1) {
+            handleSubmitWithPdf()
+        }
+      },[bookUrl]);
+      
+      useEffect(() =>{
+        if (image.length > 1) {
+            handleSubmitWithImage();
+        }
+      },[image]);
 
     return (
         <div className={styles.add_book}>
@@ -371,10 +491,12 @@ const EditBook:React.FC <Props> = ({id}) => {
                         </p>
                     }
                     {
+                       
                         successMessage &&
                         <p style={{color:"green"}}>
                             {successMessage}
                         </p>
+                        
                     }
                     
                     <div className={styles.input_container}>

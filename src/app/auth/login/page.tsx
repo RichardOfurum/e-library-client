@@ -5,14 +5,20 @@ import Image from 'next/image';
 import { IoIosArrowRoundBack } from "react-icons/io";
 import Link from 'next/link';
 import { useUserStore } from '@/store/userStore';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import SmallLoader from '@/components/smallLoader/SmallLoader';
+
+
+
+
+// import { usePathname } from 'next/navigation'
 
 const Login = () => {
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
     const router = useRouter();
+    
 
     const [loggedIn, setLoggedIn] = useState<boolean>();
     const [admin, setAdmin] = useState<boolean>();
@@ -23,13 +29,7 @@ const Login = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-//   const user = useUserStore((state) => state.user_data);
 
-// const {user_data}= useUserStore();
-
-
-
-// const token = useUserStore((state) => state.user_data.token);
 const isLoggedin = useUserStore((state) => state.user_data.isLoggedin);
 const isAdmin = useUserStore((state) => state.user_data.isAdmin);
 
@@ -126,6 +126,7 @@ const loginUserAndAdmin = () =>{
     <main className={styles.login}>
       <section className={styles.login_container}>
         <aside className={styles.left}>
+
             <Link 
                 href="/"
 

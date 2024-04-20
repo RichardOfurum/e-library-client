@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={styles.layout_body} >
-      <IsAuth/>
+        <IsAuth/>
         <IsAdmin/>
         <Nav/>
             <div className={styles.body}>
