@@ -5,14 +5,16 @@ import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 const IsAdmin:React.FC = () => {
-  const [admin, setAdmin] = useState<boolean>(true);
+  const [admin, setAdmin] = useState<boolean>();
   const isAdmin = useUserStore(state => state.user_data.isAdmin)
 
   const router = useRouter();
 
-  const checkLoginState = () =>{
-      if(!admin){
-        router.push('/auth/login')
+  const checkLoginState = async() =>{
+      if(admin == false){
+        // await useUserStore.persist.clearStorage(); 
+        // await router.push('/auth/login');
+        await router.replace('/auth/login');
       }
   }
 
@@ -22,7 +24,7 @@ const IsAdmin:React.FC = () => {
 
   useEffect(() =>{
       checkLoginState();
-  },[isAdmin])
+  },[admin])
 
   return <> </>
   
