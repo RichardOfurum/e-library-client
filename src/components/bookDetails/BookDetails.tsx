@@ -106,7 +106,8 @@ const BookDetails:React.FC <Props> = ({id}) => {
                     <p className={styles.publisher}><span>Description</span> {bookData.description} </p>
                     <div className={styles.categories}>
                         {
-                            bookData.categories.map((category:any) =>(
+                            bookData.categories.map((
+                              category:any) =>(
                                 <Link 
                                     className={styles.category}
                                     href={`/book/categories/${category}`}

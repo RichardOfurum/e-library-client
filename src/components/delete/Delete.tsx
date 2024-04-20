@@ -73,8 +73,7 @@ const Delete:React.FC<Props> = ({route, id}) => {
           ):
           <BiTrash />):
 
-          <TiLockClosed/>
-          
+          <TiLockClosed/>    
       }
     </button>
   )

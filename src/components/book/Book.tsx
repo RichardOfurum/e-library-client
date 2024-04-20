@@ -3,6 +3,9 @@ import React,{useEffect, useState} from 'react';
 import styles from './Book.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
+import Delete from '../delete/Delete';
+import { VscEdit } from 'react-icons/vsc';
+import { useUserStore } from '@/store/userStore';
 
 type Props = {
     author:string,
@@ -13,6 +16,8 @@ type Props = {
 
 const Book:React.FC<Props> = ({author, imageUrl, title, id}) => {
     const [img, setImg] = useState<string | undefined>(undefined);
+
+    const isAdmin = useUserStore(state => state.user_data.isAdmin);
 
     useEffect(() => {
         const isUrlValid = (url: string) => {
@@ -33,11 +38,20 @@ const Book:React.FC<Props> = ({author, imageUrl, title, id}) => {
 
   return (
     <div className={styles.book}>
+        {
+            isAdmin && 
+            <div className={styles.edit_delete}>
+                <Link href={`/admin/editBook/${id}`}><VscEdit /></Link>
+                
+                <Delete route="book" id={id}/>
+            </div>
+        }
         <Link
             href={`/book/${id}`}
 
             className={styles.book_container}>
-            <div className={styles.image_container}>
+            <div className={styles.image_container}>    
+                
              
                     <Image
                         className={styles.book_image}
