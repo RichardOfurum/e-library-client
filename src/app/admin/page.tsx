@@ -1,7 +1,10 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import Link from 'next/link'
 
 const page = () => {
+
   return (
     <div>
       <h1>Admin dashboard</h1>
@@ -15,6 +18,9 @@ const page = () => {
       <br />
       <br />
       <Link href="/admin/createCategory">create category</Link>
+      <br />
+      <br />
+      <Link href="/admin/user">Users</Link>
     </div>
   )
 }
