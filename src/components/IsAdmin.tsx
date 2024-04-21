@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 const IsAdmin:React.FC = () => {
-  const [admin, setAdmin] = useState<boolean>();
+  const [admin, setAdmin] = useState<boolean>(true);
   const isAdmin = useUserStore(state => state.user_data.isAdmin)
 
   const router = useRouter();
@@ -23,7 +23,9 @@ const IsAdmin:React.FC = () => {
   },[isAdmin]);
 
   useEffect(() =>{
-      checkLoginState();
+      setTimeout(() =>{
+        checkLoginState();
+      },2000)
   },[admin])
 
   return <> </>

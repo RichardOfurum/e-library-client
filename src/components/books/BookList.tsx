@@ -66,7 +66,7 @@ useEffect(() => {
         <div className={styles.books_container}>
 
           {
-              loading &&
+              (books.length <= 0 && loading)  &&
 
               <div className={styles.load_more_container}>
                 <BigLoader dark={true}/>
