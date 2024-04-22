@@ -10,7 +10,7 @@ import { BiPlus, BiUser } from 'react-icons/bi';
 import BookList from '@/components/books/BookList';
 
 
-const page = () => {
+const AdminPage = () => {
 
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -155,9 +155,9 @@ const page = () => {
       </div>
 
       <BookList route="book?"/>
-      
+
     </div>
   )
 }
 
-export default page
+export default AdminPage
