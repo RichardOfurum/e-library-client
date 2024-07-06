@@ -118,7 +118,7 @@ const loginUserAndAdmin = () =>{
 
   useEffect(() =>{
     loginUserAndAdmin();
-  },[loggedIn])
+  },[loggedIn]);
 
 
 
