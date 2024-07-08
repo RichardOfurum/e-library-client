@@ -4,7 +4,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "e-library",
-  description: "school of nuresing",
+  description: "college of nursing",
 };
 
 export default function RootLayout({
